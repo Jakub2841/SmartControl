@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lights — SmartControl</title>
+    <meta name="description" content="Smart home lighting control.">
+    <meta name="theme-color" content="#0f1317">
+    <link rel="icon" type="image/svg+xml" href="assets/img/Logo.svg">
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body data-lights="on">
+    <nav class="nav" aria-label="Main">
+        <div class="nav__container">
+            <div class="nav__bar">
+                <div class="nav__lead">
+                    <button type="button" class="nav-icon" id="nav-settings" aria-label="Settings">
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.076.124l1.217-.456a1.125 1.125 0 0 1 1.369.49l1.297 2.247a1.125 1.125 0 0 1-.261 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        </svg>
+                    </button>
+
+                    <a href="index.html" class="nav__brand">
+                        <img src="assets/img/Logo.svg" alt="Logo" class="nav__brand-mark" width="40" height="40">
+                        <span class="nav__brand-name">Made by Jakub</span>
+                    </a>
+                </div>
+
+                <div class="nav__links">
+                    <a href="index.html" class="nav-link" aria-current="page">Home</a>
+                    <a href="scene.html" class="nav-link">Scene</a>
+                    <a href="rooms.html" class="nav-link">Rooms</a>
+                </div>
+
+                <div class="nav__toggle-wrap">
+                    <button
+                        type="button"
+                        class="nav-icon nav__toggle"
+                        id="nav-toggle"
+                        aria-label="Toggle menu"
+                        aria-expanded="false"
+                        aria-controls="nav-panel"
+                    >
+                        <svg data-icon="open" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <svg data-icon="close" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav__panel" id="nav-panel" data-open="false">
+            <div class="nav__panel-inner">
+                <a href="index.html" class="nav-link" aria-current="page">Home</a>
+                <a href="scene.html" class="nav-link">Scene</a>
+                <a href="rooms.html" class="nav-link">Rooms</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- <home> -->
+    <main class="main">
+        <header class="intro">
+            <span class="section-label">&lt;home&gt;</span>
+        </header>
+
+        <div class="board">
+            <section class="panel" aria-label="Light control">
+                <div class="panel__head">
+                    <span class="section-label" id="panel-label">&lt;living-room&gt;</span>
+                </div>
+
+                <div class="dial">
+                    <button
+                        type="button"
+                        class="power"
+                        id="power"
+                        aria-pressed="true"
+                        aria-label="Turn Living Room lights off"
+                    >
+                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
+                        </svg>
+                    </button>
+                </div>
+
+                <dl class="meta">
+                    <div class="meta__item">
+                        <dt class="meta__label">Room</dt>
+                        <dd class="meta__value" id="meta-room">Living Room</dd>
+                    </div>
+                    <div class="meta__item">
+                        <dt class="meta__label">Rooms</dt>
+                        <dd class="meta__value" id="meta-fixtures">4</dd>
+                    </div>
+                    <div class="meta__item">
+                        <dt class="meta__label">Status</dt>
+                        <dd class="meta__value">
+                            <span class="dot" aria-hidden="true"></span>
+                            <span id="meta-status">On</span>
+                        </dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section class="panel" aria-label="Rooms">
+                <div class="panel__head">
+                    <span class="section-label">&lt;rooms&gt;</span>
+                </div>
+
+                <div class="rooms" role="group" aria-label="Select a room">
+                    <button type="button" class="room" data-room="living-room" data-name="Living Room" data-fixtures="4" data-on="true" aria-pressed="true">
+                        <span class="dot" aria-hidden="true"></span>
+                        Living Room
+                    </button>
+                    <button type="button" class="room" data-room="kitchen" data-name="Kitchen" data-fixtures="6" data-on="false" aria-pressed="false">
+                        <span class="dot" aria-hidden="true"></span>
+                        Kitchen
+                    </button>
+                    <button type="button" class="room" data-room="bedroom" data-name="Bedroom" data-fixtures="3" data-on="false" aria-pressed="false">
+                        <span class="dot" aria-hidden="true"></span>
+                        Bedroom
+                    </button>
+                    <button type="button" class="room" data-room="office" data-name="Office" data-fixtures="2" data-on="false" aria-pressed="false">
+                        <span class="dot" aria-hidden="true"></span>
+                        Office
+                    </button>
+                </div>
+
+                <div class="master">
+                    <button type="button" class="master__button" id="all-lights" data-on="false" aria-label="Turn all lights on">
+                        <span class="dot" aria-hidden="true"></span>
+                        All lights
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/nav.js" defer></script>
+    <script src="js/dashboard.js" defer></script>
+</body>
+</html>

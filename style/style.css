@@ -1,0 +1,561 @@
+/* ==========================================================================
+   madebyjakub.dev — brand stylesheet
+   Dark-only. Single accent (coral). No second hue, no light mode, no gradients.
+   Tokens extracted from the live compiled stylesheet of madebyjakub.dev.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    color-scheme: dark;
+
+    /* Accent — a signal colour, not a fill colour */
+    --color-primary: #e8635a;
+    --color-primary-hover: #d44f46;
+    --color-primary-fg: #f0f2f4;
+
+    /* Surfaces */
+    --color-surface: #0f1317;
+    --color-surface-elevated: #181e24;
+    --color-border: #252d35;
+
+    /* Text */
+    --color-text-primary: #f0f2f4;
+    --color-text-muted: #8b949e;
+
+    /* Type */
+    --font-sans: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+
+    /* Radii — interactive/nav elements are rounded-box, cards rounded-lg */
+    --radius-field: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-box: 0.5rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+
+    /* Motion — 150ms default. Only colour/borders animate. */
+    --duration-brand: 0.15s;
+    --ease-brand: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Accent opacity ladder: 5 / 10 / 20 / 30 / 45 / 60% — do not freestyle */
+    --primary-5: color-mix(in srgb, var(--color-primary) 5%, transparent);
+    --primary-10: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    --primary-20: color-mix(in srgb, var(--color-primary) 20%, transparent);
+    --primary-30: color-mix(in srgb, var(--color-primary) 30%, transparent);
+    --primary-45: color-mix(in srgb, var(--color-primary) 45%, transparent);
+    --primary-60: color-mix(in srgb, var(--color-primary) 60%, transparent);
+
+    /* Status tints — state feedback only, never layout or headings.
+       Success = online / running / available. */
+    --color-success: #00c758;
+    --success-5: color-mix(in srgb, var(--color-success) 5%, transparent);
+    --success-30: color-mix(in srgb, var(--color-success) 30%, transparent);
+    --success-45: color-mix(in srgb, var(--color-success) 45%, transparent);
+    --color-off: #8b949e;
+    --off-5: color-mix(in srgb, var(--color-off) 5%, transparent);
+    --off-30: color-mix(in srgb, var(--color-off) 30%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Single screen, no scroll: the document is exactly one viewport tall and
+   the nav / content split it with flex. */
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    cursor: pointer;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-field);
+}
+
+/* --------------------------------------------------------------------------
+   3. Navigation
+   Sticky, surface-coloured, soft black shadow — the shadow is the depth cue.
+   No glassmorphism, no blur, no gradients.
+   -------------------------------------------------------------------------- */
+.nav {
+    flex: none;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow:
+        0 10px 15px -3px rgb(0 0 0 / 0.2),
+        0 4px 6px -4px rgb(0 0 0 / 0.2);
+}
+
+.nav__container {
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+    .nav__container {
+        padding-inline: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .nav__container {
+        padding-inline: 2rem;
+    }
+}
+
+.nav__bar {
+    display: flex;
+    justify-content: space-between;
+    height: 4rem;
+}
+
+.nav__lead {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Icon button — the settings trigger and the mobile menu share one style */
+.nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    transition:
+        color var(--duration-brand) var(--ease-brand),
+        background-color var(--duration-brand) var(--ease-brand);
+}
+
+.nav-icon:hover {
+    color: var(--color-text-primary);
+    background-color: color-mix(in srgb, var(--color-surface-elevated) 80%, transparent);
+}
+
+.nav-icon svg {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-primary);
+    transition: opacity var(--duration-brand) var(--ease-brand);
+}
+
+.nav__brand:hover {
+    opacity: 0.8;
+}
+
+.nav__brand-mark {
+    height: 2.5rem;
+    width: auto;
+}
+
+.nav__brand-name {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+/* Nav item recipe */
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: var(--radius-box);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition:
+        color 200ms var(--ease-brand),
+        background-color 200ms var(--ease-brand);
+}
+
+.nav-link:hover,
+.nav-link[aria-current="page"] {
+    color: var(--color-primary);
+    background-color: var(--primary-5);
+}
+
+.nav__links {
+    display: none;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.nav__toggle-wrap {
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .nav__links {
+        display: flex;
+    }
+
+    .nav__toggle-wrap {
+        display: none;
+    }
+
+    .nav__panel,
+    .nav__panel[data-open="true"] {
+        display: none;
+    }
+}
+
+.nav__toggle [data-icon="close"],
+.nav__toggle[aria-expanded="true"] [data-icon="open"] {
+    display: none;
+}
+
+.nav__toggle[aria-expanded="true"] [data-icon="close"] {
+    display: block;
+}
+
+/* Mobile panel */
+.nav__panel {
+    display: none;
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface-elevated);
+}
+
+.nav__panel[data-open="true"] {
+    display: block;
+}
+
+.nav__panel-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+}
+
+.nav__panel .nav-link {
+    justify-content: flex-start;
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout
+   Nav is a fixed 4rem. Everything below it lives in one viewport — the page
+   never scrolls. The board is a grid: control panel + room rail on desktop,
+   stacked on mobile. The dial is a size query container, so the power button
+   is sized against the space it actually has and can never overflow.
+   -------------------------------------------------------------------------- */
+.main {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 80rem;
+    min-height: 0;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem 1rem;
+}
+
+@media (min-width: 640px) {
+    .main {
+        gap: 1.75rem;
+        padding: 1.75rem 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .main {
+        padding-inline: 2rem;
+    }
+}
+
+.intro {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.board {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .board {
+        grid-template-columns: minmax(0, 1fr) 16rem;
+        grid-template-rows: minmax(0, 1fr);
+        gap: 1.25rem;
+    }
+}
+
+/* Card — one border, one surface. The nav owns the only shadow. */
+.panel {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-elevated);
+}
+
+.panel__head {
+    flex: none;
+    padding: 1rem 1.25rem 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. Section label — the signature device
+   Every section opens with an angle-bracketed, monospace, uppercase label.
+   Lowercase inside the brackets, always.
+   -------------------------------------------------------------------------- */
+.section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary-60);
+}
+
+/* --------------------------------------------------------------------------
+   6. Power control — the hero
+   Off = muted grey, on = success green. Both are signal colours: 5% fill,
+   30% border, solid glyph. Sized to the largest square the dial allows.
+   Only colour animates — no grow, no glow, no pulse.
+   -------------------------------------------------------------------------- */
+.dial {
+    container-type: size;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem 1.25rem;
+}
+
+.power {
+    /* fallback for browsers without container query units */
+    --power-size: min(55vmin, 26rem, calc(100vh - 18rem));
+    --power-size: min(80cqmin, 26rem);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--power-size);
+    height: var(--power-size);
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    transition:
+        color var(--duration-brand) var(--ease-brand),
+        background-color var(--duration-brand) var(--ease-brand),
+        border-color var(--duration-brand) var(--ease-brand);
+}
+
+.power svg {
+    width: calc(var(--power-size) * 0.3);
+    height: calc(var(--power-size) * 0.3);
+}
+
+.power:hover {
+    color: var(--color-text-primary);
+    border-color: var(--off-30);
+}
+
+/* On */
+.power[aria-pressed="true"] {
+    color: var(--color-success);
+    border-color: var(--success-30);
+    background-color: var(--success-5);
+}
+
+.power[aria-pressed="true"]:hover {
+    color: var(--color-success);
+    border-color: var(--success-45);
+}
+
+/* --------------------------------------------------------------------------
+   7. Meta rows
+   Label uppercase and muted, value in primary text. Reusable across the site.
+   -------------------------------------------------------------------------- */
+.meta {
+    flex: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+    gap: 0.75rem 1.25rem;
+    margin: 0;
+    padding: 0.75rem 1.25rem 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.meta__item {
+    min-width: 0;
+}
+
+.meta__label {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+
+.meta__value {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   8. Rooms
+   Selectable rows. The accent marks the room being controlled; the dot marks
+   whether that room's lights are on. Colour only, no lift.
+   -------------------------------------------------------------------------- */
+.rooms {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.5rem;
+    padding: 0 1.25rem 1.25rem;
+}
+
+/* Well button — the room rows and the master action share one style */
+.room,
+.master__button {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: var(--radius-box);
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-align: left;
+    transition:
+        color 200ms var(--ease-brand),
+        background-color 200ms var(--ease-brand),
+        border-color 200ms var(--ease-brand);
+}
+
+.room:hover,
+.master__button:hover {
+    color: var(--color-text-primary);
+    border-color: var(--primary-30);
+}
+
+.room[aria-pressed="true"] {
+    color: var(--color-primary);
+    background-color: var(--primary-5);
+    border-color: var(--primary-30);
+}
+
+@media (min-width: 768px) {
+    .rooms {
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+
+    .room {
+        width: 100%;
+    }
+}
+
+/* All lights — one click for the whole house. Sits under a rule so it reads
+   as an action on the list, not as another room. */
+.master {
+    flex: none;
+    padding: 0.75rem 1.25rem 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.master__button {
+    width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   9. Status dot
+   Filled when the lights are on, dim grey when they are off. The text next to
+   it always carries the meaning on its own.
+   -------------------------------------------------------------------------- */
+.dot {
+    --dot-color: color-mix(in srgb, var(--color-off) 45%, transparent);
+
+    flex: none;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background-color: var(--dot-color);
+    transition: background-color var(--duration-brand) var(--ease-brand);
+}
+
+/* the readout for the current room, and any control that is on */
+[data-lights="on"] .meta .dot,
+[data-on="true"] .dot {
+    --dot-color: var(--color-success);
+}
